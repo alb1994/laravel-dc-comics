@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Elenco dei Fumetti</h1>
+                <a href="{{route('comics.create')}}">Aggiungi fumetto</a>
                 <hr>
                 <div class="row">
                     @foreach($comics as $comic)

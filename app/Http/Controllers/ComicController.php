@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comic;
-use App\Http\Requests\StoreComicRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateComicRequest;
 
 class ComicController extends Controller
@@ -26,18 +26,18 @@ class ComicController extends Controller
      */
     public function create()
     {
-        // Mostra il form di creazione di un nuovo fumetto.
+        return view('comics.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreComicRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreComicRequest $request)
+    public function store(Request $request)
     {
-        // Salva un nuovo fumetto nel database.
+        dd($request);
     }
 
     /**
@@ -46,7 +46,6 @@ class ComicController extends Controller
      * @param  \App\Models\Comic  $comic
      * @return \Illuminate\Http\Response
      */
-        // Mostra un fumetto specifico.
     public function show(Comic $comic)
     {
         return view('comics.show', compact('comic'));
