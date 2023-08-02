@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comic;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateComicRequest;
+use Illuminate\Support\Carbon;
 
 class ComicController extends Controller
 {
@@ -37,7 +38,31 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        $form_data = $request->all();
+    
+        $comic = new Comic();
+        $comic->title = $form_data['title'];
+        $comic->series = $form_data['series'];
+        
+        // Conversione del campo "price" in un valore numerico
+        $comic->price = floatval(str_replace(',', '.', str_replace('.', '', $form_data['price'])));
+    
+        $comic->type = $form_data['type'];
+        
+        // Assicurati di gestire correttamente i campi "thumb" e "thumb2" se presenti nel form
+        $comic->thumb = $form_data['thumb'] ?? '';
+        $comic->thumb2 = $form_data['thumb2'] ?? '';
+    
+        // Gestisci correttamente il campo "description" se presente nel form
+        $comic->description = $form_data['description'] ?? '';
+
+        // Converti la data nel formato corretto "YYYY-MM-DD"
+        $comic->sale_date = Carbon::createFromFormat('m/d/y', $form_data['sale_date'])->format('Y-m-d');
+    
+        // Salva il nuovo fumetto nel database
+        $comic->save();
+    
+        return redirect()->route('comics.index');
     }
 
     /**
@@ -57,9 +82,10 @@ class ComicController extends Controller
      * @param  \App\Models\Comic  $comic
      * @return \Illuminate\Http\Response
      */
+    // Mostra il form di modifica di un fumetto esistente.
     public function edit(Comic $comic)
     {
-        // Mostra il form di modifica di un fumetto esistente.
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -69,9 +95,33 @@ class ComicController extends Controller
      * @param  \App\Models\Comic  $comic
      * @return \Illuminate\Http\Response
      */
+    // Aggiorna un fumetto esistente nel database
     public function update(UpdateComicRequest $request, Comic $comic)
     {
-        // Aggiorna un fumetto esistente nel database.
+        $form_data = $request->all();
+
+        $comic->title = $form_data['title'];
+        $comic->series = $form_data['series'];
+
+        // Conversione del campo "price" in un valore numerico
+        $comic->price = floatval(str_replace(',', '.', str_replace('.', '', $form_data['price'])));
+
+        $comic->type = $form_data['type'];
+
+        // Assicurati di gestire correttamente i campi "thumb" e "thumb2" se presenti nel form
+        $comic->thumb = $form_data['thumb'] ?? '';
+        $comic->thumb2 = $form_data['thumb2'] ?? '';
+
+        // Gestisci correttamente il campo "description" se presente nel form
+        $comic->description = $form_data['description'] ?? '';
+
+        // Converti la data nel formato corretto "YYYY-MM-DD"
+        $comic->sale_date = Carbon::createFromFormat('m/d/y', $form_data['sale_date'])->format('Y-m-d');
+
+        // Salva le modifiche al fumetto nel database
+        $comic->save();
+
+        return redirect()->route('comics.index');
     }
 
     /**
@@ -83,5 +133,8 @@ class ComicController extends Controller
     public function destroy(Comic $comic)
     {
         // Elimina un fumetto dal database.
+        $comic->delete();
+
+        return redirect()->route('comics.index');
     }
 }

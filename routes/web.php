@@ -25,3 +25,4 @@ Route::get('/', function () {
 
 // Definisce una risorsa "comic", che abilita le rotte standard per le operazioni CRUD relative ai fumetti
 Route::resource('comics', ComicController::class);
+

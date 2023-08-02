@@ -15,6 +15,7 @@
                                 <img src="{{$comic->thumb}}" class="img-fluid mb-4" alt="Copertina del fumetto">
                                     <p class="card-text"><strong>Serie:</strong> {{$comic->series}}</p>
                                     <a href="{{ route('comics.show', $comic->id)}}" class="btn btn-primary">Dettagli</a>
+                                    <a href="{{ route('comics.edit', $comic->id)}}" class="btn btn-primary">Modifica</a> 
                                 </div>
                             </div>
                         </div>
