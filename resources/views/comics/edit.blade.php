@@ -22,7 +22,20 @@
                                 <input type="text" class="form-control" id="series" name="series" placeholder="Serie" value="{{ $comic->series }}">
                             </div>
 
-                            <!-- Aggiungi gli altri campi del form con i valori correnti del fumetto -->
+                            <div class="form-group">
+                                <label for="price">Prezzo:</label>
+                                <input type="text" class="form-control" id="price" name="price" placeholder="Prezzo" value="{{ $comic->price }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Descrizione:</label>
+                                <input type="text" class="form-control" id="description" name="description" placeholder="Descrizione" value="{{ $comic->description }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sale_date">Anno uscita:</label>
+                                <input type="text" class="form-control" id="sale_date" name="sale_date" placeholder="Anno uscita" value="{{ $comic->sale_date }}">
+                            </div>
 
                             <button type="submit" class="btn btn-primary">Salva modifiche</button>
                         </form>

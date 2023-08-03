@@ -57,7 +57,7 @@ class ComicController extends Controller
         $comic->description = $form_data['description'] ?? '';
 
         // Converti la data nel formato corretto "YYYY-MM-DD"
-        $comic->sale_date = Carbon::createFromFormat('m/d/y', $form_data['sale_date'])->format('Y-m-d');
+        $comic->sale_date = date('Y-m-d', strtotime($form_data['sale_date']));
     
         // Salva il nuovo fumetto nel database
         $comic->save();
@@ -98,30 +98,7 @@ class ComicController extends Controller
     // Aggiorna un fumetto esistente nel database
     public function update(UpdateComicRequest $request, Comic $comic)
     {
-        $form_data = $request->all();
-
-        $comic->title = $form_data['title'];
-        $comic->series = $form_data['series'];
-
-        // Conversione del campo "price" in un valore numerico
-        $comic->price = floatval(str_replace(',', '.', str_replace('.', '', $form_data['price'])));
-
-        $comic->type = $form_data['type'];
-
-        // Assicurati di gestire correttamente i campi "thumb" e "thumb2" se presenti nel form
-        $comic->thumb = $form_data['thumb'] ?? '';
-        $comic->thumb2 = $form_data['thumb2'] ?? '';
-
-        // Gestisci correttamente il campo "description" se presente nel form
-        $comic->description = $form_data['description'] ?? '';
-
-        // Converti la data nel formato corretto "YYYY-MM-DD"
-        $comic->sale_date = Carbon::createFromFormat('m/d/y', $form_data['sale_date'])->format('Y-m-d');
-
-        // Salva le modifiche al fumetto nel database
-        $comic->save();
-
-        return redirect()->route('comics.index');
+        
     }
 
     /**
