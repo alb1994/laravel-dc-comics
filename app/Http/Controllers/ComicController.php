@@ -96,10 +96,20 @@ class ComicController extends Controller
      * @return \Illuminate\Http\Response
      */
     // Aggiorna un fumetto esistente nel database
-    public function update(UpdateComicRequest $request, Comic $comic)
-    {
-        
-    }
+    public function update(Request $request, Comic $comic)
+{
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'series' => 'required|string',
+        'price' => 'required|numeric',
+        'description' => 'nullable|string',
+        'sale_date' => 'required|date_format:Y-m-d',
+    ]);
+
+    $comic->update($validatedData);
+
+    return redirect()->route('comics.index', $comic->id);
+}
 
     /**
      * Remove the specified resource from storage.
