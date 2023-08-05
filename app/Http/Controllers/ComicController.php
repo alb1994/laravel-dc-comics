@@ -108,7 +108,7 @@ class ComicController extends Controller
 
     $comic->update($validatedData);
 
-    return redirect()->route('comics.index', $comic->id);
+    return redirect()->route('comics.show', $comic->id);
 }
 
     /**
@@ -121,7 +121,6 @@ class ComicController extends Controller
     {
         // Elimina un fumetto dal database.
         $comic->delete();
-
         return redirect()->route('comics.index');
     }
 }
